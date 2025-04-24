@@ -2,7 +2,6 @@ import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { Container, CircularProgress } from "@mui/material";
 
-// Lazy-loaded components
 const Dashboard = lazy(() => import("./components/Dashboard"));
 const About = lazy(() => import("./components/About"));
 
