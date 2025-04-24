@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import axios from "../api/axiosInstance";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   Bar,
   BarChart,
@@ -30,7 +30,7 @@ export default function Dashboard() {
   const [rates, setRates] = useState({});
   const [loading, setLoading] = useState(true);
 
-  const fetchRates = async () => {
+  const fetchRates = useCallback(async () => {
     try {
       const response = await axios.get(
         `https://api.coingecko.com/api/v3/simple/price?ids=${crypto}&vs_currencies=${currencies.join(
@@ -42,13 +42,13 @@ export default function Dashboard() {
     } catch (error) {
       console.error("Error fetching rates:", error);
     }
-  };
+  }, [crypto]); // Now fetchRates is stable and uses crypto as a dependency
 
   useEffect(() => {
     fetchRates();
-    const interval = setInterval(fetchRates, 10000);
+    const interval = setInterval(fetchRates, 10000); // Poll every 10s
     return () => clearInterval(interval);
-  }, [crypto]);
+  }, [fetchRates]); // Now fetchRates is included in the dependency array
 
   return (
     <Container maxWidth="sm" sx={{ mt: 4 }}>
