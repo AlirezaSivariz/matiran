@@ -42,13 +42,13 @@ export default function Dashboard() {
     } catch (error) {
       console.error("Error fetching rates:", error);
     }
-  }, [crypto]); // Now fetchRates is stable and uses crypto as a dependency
+  }, [crypto]);
 
   useEffect(() => {
     fetchRates();
-    const interval = setInterval(fetchRates, 10000); // Poll every 10s
+    const interval = setInterval(fetchRates, 10000);
     return () => clearInterval(interval);
-  }, [fetchRates]); // Now fetchRates is included in the dependency array
+  }, [fetchRates]);
 
   return (
     <Container maxWidth="sm" sx={{ mt: 4 }}>
